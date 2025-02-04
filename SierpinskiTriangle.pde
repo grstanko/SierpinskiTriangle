@@ -7,8 +7,6 @@ void setup() {
 
 void draw() {
   background(51);
-  
-  System.out.println(gdepth);
   serpinski(gdepth, 0, 0, width, height);
 }
 
