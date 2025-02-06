@@ -1,40 +1,88 @@
 void setup() {
-  size(1000, 866);
-  gdepth = 1;
-  noStroke();
-  ellipseMode(CORNER);
+  size(500, 500,P3D);
 }
 
 void draw() {
   background(51);
-  serpinski(gdepth, 0, 0, width, height);
+  camera(radius * sin(theta) * cos(phi), radius * sin(theta) * sin(phi), radius * cos(theta), 0, 0, 0, 0.0, 1.0, 0.0);
+  menger(depth, 150);
 }
 
-int count;
-int dcount;
-int gdepth;
+int depth = 1;
+float phi = 0;
+float theta = 0;
+float radius = 300;
 
-void serpinski(int depth, float x, float y, float width, float height) {
-  if (depth <= 1) {
-    triangle(x, y, x+width/2, y+height, x+width, y);
+void menger(int depth, float length) {
+  if (depth == 1) {
+    box(length);
   } else {
-    serpinski(depth-1, x, y, width/2, height/2);
-    serpinski(depth-1, x+width/2, y, width/2, height/2);
-    serpinski(depth-1, x+width/4, y+height/2, width/2, height/2);
+    pushMatrix();
+    translate(length/3, 0, 0);
+    menger(depth -1, length/3);
+    translate(length/3, 0, 0);
+    menger(depth-1, length/3);
+    translate(length/3, 0, 0);
+    menger(depth-1, length/3);
+    translate(0, length/3, 0);
+    menger(depth-1, length/3);
+    translate(0, length/3, 0);
+    menger(depth-1, length/3);
+    translate(-length/3, 0, 0);
+    menger(depth -1, length/3);
+    translate(-length/3, 0, 0);
+    menger(depth -1, length/3);
+    translate(0, -length/3, 0);
+    menger(depth-1, length/3);
+    translate(0, -length/3, length/3);
+    menger(depth-1, length/3);
+    translate(length/3*2, 0, 0);
+    menger(depth-1, length/3);
+    translate(0, length/3*2, 0);
+    menger(depth-1, length/3);
+    translate(-length/3*2, 0, 0);
+    menger(depth-1, length/3);
+    translate(length/3*2, 0, length/3);
+    menger(depth-1, length/3);
+    translate(0, -length/3, 0);
+    menger(depth-1, length/3);
+    translate(0, -length/3, 0);
+    menger(depth-1, length/3);
+    translate(-length/3, 0, 0);
+    menger(depth-1, length/3);
+    translate(0, length/3, 0);
+    //menger(depth-1, length/3);
+    translate(0, length/3, 0);
+    menger(depth-1, length/3);
+    translate(-length/3, 0, 0);
+    menger(depth-1, length/3);
+    translate(0, -length/3, 0);
+    menger(depth-1, length/3);
+    translate(0, -length/3, 0);
+    menger(depth-1, length/3);
+    popMatrix();
   }
 }
 
-void sl() {
-  while(true) {
-    if (keyPressed == true) {
-      return;
-    }}
-}
-
 void keyPressed() {
-  if (key == '=') {
-    gdepth++;
-  } else if (key == '-') {
-    gdepth--;
+  switch (key) {
+    case 'w':
+      phi-=0.1;
+      break;
+     case 's':
+       phi+=0.1;
+       break;
+      case 'q':
+        theta-=0.1;
+        break;
+       case 'e':
+         theta+=0.1;
+         break;
+       case '-':
+       depth--;
+         break;
+       case '=':depth++;
+         break;
+ 
   }
 }
